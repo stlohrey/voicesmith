@@ -101,7 +101,6 @@ def sample_wise_min_max(x: torch.Tensor) -> torch.Tensor:
     minimum = torch.amin(x, dim=(1, 2), keepdim=True)
     return (x - minimum) / (maximum - minimum)
 
-
 def get_mask_from_lengths(lengths: torch.Tensor) -> torch.Tensor:
     batch_size = lengths.shape[0]
     max_len = torch.max(lengths).item()
@@ -112,7 +111,7 @@ def get_mask_from_lengths(lengths: torch.Tensor) -> torch.Tensor:
     )
     mask = ids >= lengths.unsqueeze(1).expand(-1, max_len)
     return mask
-
+    
 
 def pad_1D(inputs: List[np.ndarray], pad_value: float = 0.0) -> np.ndarray:
     def pad_data(x, length):

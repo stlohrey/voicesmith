@@ -451,7 +451,7 @@ def acoustic_fine_tuning_stage(
             )
             if checkpoint_acoustic is None:
                 reset = True
-                #checkpoint_acoustic = str(Path(assets_path) / "acoustic_pretrained.pt")
+                checkpoint_acoustic = str(Path(assets_path) / "acoustic_pretrained.pt")
             else:
                 reset = False
 
@@ -478,8 +478,8 @@ def acoustic_fine_tuning_stage(
                 logger=logger,
                 device=device,
                 reset=reset,
-                checkpoint_acoustic="",#str(checkpoint_acoustic),
-                fine_tuning=False,
+                checkpoint_acoustic=str(checkpoint_acoustic),
+                fine_tuning=True,
                 overwrite_saves=True,
                 assets_path=assets_path,
                 training_runs_path=training_runs_path,
@@ -553,7 +553,6 @@ def ground_truth_alignment_stage(
     while True:
         try:
             ground_truth_alignment(
-                language=p_config.language,
                 db_id=run_id,
                 table_name="training_run",
                 training_run_name=str(run_id),
@@ -857,6 +856,9 @@ def continue_training_run(run_id: int, log_console: bool):
         models_path=MODELS_PATH,
         log_console=log_console,
     )
+    print(cur,con)
+    print(get_stage_name)
+
 
 
 if __name__ == "__main__":
@@ -864,5 +866,10 @@ if __name__ == "__main__":
     parser.add_argument("--run_id", type=int, required=True)
     parser.add_argument("--log_console", action="store_true")
     args = parser.parse_args()
+    con = get_con(DB_PATH)
+    cur = con.cursor()
+    print(cur,con)
+    print(get_stage_name(cur, 1))
     continue_training_run(run_id=args.run_id, log_console=args.log_console)
+    
 

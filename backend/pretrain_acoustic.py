@@ -17,8 +17,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-    logger = WandBLogger("DelightfulTTS HUI with UnsupDurAligner")
-    p_config = PreprocessingConfig(language="multilingual")
+    logger = WandBLogger("DelightfulTTS 120M parameters with UnsupDurAligner")
+    p_config = PreprocessingConfig(language="english_only")
     m_config = AcousticENModelConfig()
     t_config = AcousticPretrainingConfig()
     wandb.config.update(

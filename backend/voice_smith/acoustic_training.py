@@ -1,5 +1,6 @@
 from logging import Logger
 import torch
+from torch import optim
 from torch.nn.utils.clip_grad import clip_grad_norm_
 from torch.utils.data import DataLoader
 import torchaudio
@@ -523,7 +524,7 @@ def train_acoustic(
 
     gen, optim, step = get_acoustic_models(
         data_path=str(data_path),
-        checkpoint_acoustic=checkpoint_acoustic,
+        checkpoint_acoustic=None,#checkpoint_acoustic,
         train_config=train_config,
         preprocess_config=preprocess_config,
         model_config=model_config,

@@ -3,7 +3,7 @@ from typing import List, Tuple
 from pathlib import Path
 import shutil
 from joblib import delayed, Parallel
-from voice_smith.utils.shell import run_conda_in_shell
+from voice_smith.utils.run_in_conda import run_conda_in_env
 from voice_smith.utils.mfa import lang_to_mfa_acoustic
 from voice_smith.utils.tools import iter_logger
 from voice_smith.config.configs import PreprocessLangType
@@ -115,7 +115,7 @@ def align(
             break
         copy_batch(base_paths=base_paths, out_dir=str(tmp_dir), n_workers=n_workers)
         cmd = f"mfa align --overwrite --clean -j {n_workers} {tmp_dir} {lexicon_path} {lang_to_mfa_acoustic(lang, language_type)} {out_path}"
-        success = run_conda_in_shell(cmd, environment_name, stderr_to_stdout=True)
+        success = run_conda_in_env(cmd)
         finish_batch(
             cur=cur,
             con=con,

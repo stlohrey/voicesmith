@@ -1,10 +1,12 @@
 import torch
 from typing import List, Dict
 from voice_smith.config.configs import PreprocessLangType
-from voice_smith.utils.shell import run_conda_in_shell
+from voice_smith.utils.run_in_conda import run_conda_in_env
 from voice_smith.preprocessing.g2p import batched_predict, get_g2p
 from voice_smith.utils.tokenization import WordTokenizer
 from voice_smith.utils.mfa import lang_to_mfa_g2p
+
+
 
 
 def generate_vocab(
@@ -39,4 +41,4 @@ def generate_vocab_mfa(
     language_type: PreprocessLangType,
 ):
     cmd = f"mfa g2p --clean -j {n_workers} {lang_to_mfa_g2p(lang, language_type)} {corpus_path} {lexicon_path}"
-    run_conda_in_shell(cmd, environment_name, stderr_to_stdout=True)
+    run_conda_in_env(cmd)

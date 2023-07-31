@@ -8,6 +8,7 @@ from voice_smith.utils.tools import to_device, iter_logger
 from voice_smith.config.configs import (
     AcousticFinetuningConfig,
     PreprocessingConfig,
+    AcousticMultilingualModelConfig as AcousticModelConfig
 )
 from voice_smith.utils.loggers import Logger
 from voice_smith.model.acoustic_model import AcousticModel
@@ -54,10 +55,12 @@ def save_gta(
                 src_lens,
                 mels,
                 pitches,
-                durations,
                 mel_lens,
                 langs,
+                attn_priors,
             ) = batch
+            print(src_lens)
+            print(mel_lens)
             with torch.no_grad():
                 outputs = gen.forward_train(
                     x=texts,
@@ -66,14 +69,15 @@ def save_gta(
                     mels=mels,
                     mel_lens=mel_lens,
                     pitches=pitches,
-                    durations=durations,
+                    attn_priors=attn_priors,
                     langs=langs,
                 )
                 y_pred = outputs["y_pred"]
-            for basename, speaker_id, mel_pred, mel_len, mel in zip(
-                ids, speakers, y_pred, mel_lens, mels
+            for basename, speaker_id,speakername, mel_pred, mel_len, mel in zip(
+                ids, speakers,speaker_names, y_pred, mel_lens, mels
             ):
-                speaker_name = id2speaker[int(speaker_id.item())]
+                print(speaker_id, speakername)
+                speaker_name = speakername#id2speaker[int(speaker_id.item())]
                 (output_mels_gta_dir / speaker_name).mkdir(exist_ok=True, parents=True)
                 mel_pred = mel_pred[:, :mel_len]
                 torch.save(
@@ -141,7 +145,7 @@ def ground_truth_alignment(
         data_path=str(data_path),
         checkpoint_acoustic=checkpoint_acoustic,
         train_config=AcousticFinetuningConfig(),
-        preprocess_config=PreprocessingConfig(),
+        preprocess_config=PreprocessingConfig(language="multilingual"),
         model_config=AcousticModelConfig(),
         fine_tuning=True,
         device=device,

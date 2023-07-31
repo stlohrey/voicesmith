@@ -301,8 +301,10 @@ class TacotronSTFT(torch.nn.Module):
         spectrogram: torch.FloatTensor of shape (B, n_spech_channels, T)
         mel_spectrogram: torch.FloatTensor of shape (B, n_mel_channels, T)
         """
+        print(torch.min(y.data))
         assert torch.min(y.data) >= -1
-        assert torch.max(y.data) <= 1
+        print(torch.max(y.data))
+        assert torch.max(y.data) <= 1.
 
         y = torch.nn.functional.pad(
             y.unsqueeze(1),
@@ -324,6 +326,7 @@ class TacotronSTFT(torch.nn.Module):
             pad_mode="reflect",
             normalized=False,
             onesided=True,
+            return_complex=False
         )
 
         spec = torch.sqrt(spec.pow(2).sum(-1) + (1e-9))

@@ -2,6 +2,7 @@ import json
 from lib2to3.pgen2 import token
 from typing import List
 import torch
+from torch import optim
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn.parameter import Parameter
@@ -143,8 +144,8 @@ class AcousticModel(nn.Module):
         for par in self.parameters():
             par.requires_grad = True
         if freeze_text_embed:
-            for par in self.src_word_emb.parameters():
-                self.src_word_emb.requires_grad = False
+       # for par in self.src_word_emb.parameters():
+            self.src_word_emb.requires_grad = False
         if freeze_lang_embed:
             self.lang_embed.requires_grad = False
 

@@ -26,7 +26,7 @@ ipcMain.handle(FETCH_HAS_DOCKER_CHANNEL.IN, async () => {
 });
 
 ipcMain.handle(FETCH_NEEDS_INSTALL_CHANNEL.IN, async () => {
-  return !(await exists(getInstalledPath()));
+  return true//!(await exists(getInstalledPath()));
 });
 
 ipcMain.handle(FINISH_INSTALL_CHANNEL.IN, async () => {
