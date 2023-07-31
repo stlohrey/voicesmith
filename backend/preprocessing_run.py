@@ -484,8 +484,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
     con = get_con(DB_PATH)
     cur = con.cursor()
-    print(cur,con)
-    print(get_stage_name(cur, 1))
     continue_preprocessing_run(run_id=args.run_id,gen_vocab=args.gen_vocab,log_console=args.log_console)
     
 

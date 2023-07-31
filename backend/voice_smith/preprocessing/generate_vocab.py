@@ -40,5 +40,5 @@ def generate_vocab_mfa(
     environment_name: str,
     language_type: PreprocessLangType,
 ):
-    cmd = f"mfa g2p --clean -j {n_workers} {lang_to_mfa_g2p(lang, language_type)} {corpus_path} {lexicon_path}"
+    cmd = f"mfa g2p --clean -j {n_workers} {corpus_path} {lang_to_mfa_g2p(lang, language_type)} {lexicon_path}"
     run_conda_in_env(cmd)
