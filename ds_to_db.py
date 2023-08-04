@@ -1,14 +1,16 @@
 import os
 import csv
 import sqlite3
+import argparse
 
-def create_text_files_and_generate_metadata(dataset_path, output_path, db_path):
-    # Create output directory if it doesn't exist
-    if not os.path.exists(output_path):
-        os.makedirs(output_path)
 
+'''Insert an LJspeech-Formatted Dataset into the database'''
+
+def create_text_files_and_generate_metadata(dataset_path, db_path, dataset_name, language, name):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
+
+    sample_path = os.path.join(dataset_path, 'wavs')
 
     # Create tables if they don't exist
     cursor.execute('''CREATE TABLE IF NOT EXISTS dataset (
@@ -31,13 +33,12 @@ def create_text_files_and_generate_metadata(dataset_path, output_path, db_path):
                       FOREIGN KEY (speaker_id) REFERENCES speaker(ID))''')
 
     # Insert dataset into the database and get its ID
-    dataset_name = 'LJSpeech'  # Replace this with the actual dataset name
     cursor.execute("INSERT INTO dataset (name) VALUES (?)", (dataset_name,))
     dataset_id = cursor.lastrowid
 
     # Insert speaker into the database and get its ID
-    speaker_name = 'SINGLE_SPEAKER_NAME'  # Replace this with the actual speaker name
-    cursor.execute("INSERT INTO speaker (name, dataset_id) VALUES (?, ?)", (speaker_name, dataset_id))
+    speaker_name = name  # Replace this with the actual speaker name
+    cursor.execute("INSERT INTO speaker (name, dataset_id) VALUES (?, ?, ?)", (speaker_name, dataset_id, language))
     speaker_id = cursor.lastrowid
 
     metadata = []
@@ -46,7 +47,7 @@ def create_text_files_and_generate_metadata(dataset_path, output_path, db_path):
         next(reader)  # Skip the header row
         for (filename, transcription) in reader:
             audio_path = os.path.join(dataset_path, 'wavs', filename)
-            text_path = os.path.join(output_path, os.path.splitext(filename)[0] + '.txt')
+            text_path = os.path.join(sample_path, os.path.splitext(filename)[0] + '.txt')
 
             # Insert sample information into the database
             cursor.execute("INSERT INTO sample (txt_path, audio_path, speaker_id, text) "
@@ -72,12 +73,12 @@ def create_text_files_and_generate_metadata(dataset_path, output_path, db_path):
     return metadata
 
 if __name__ == "__main__":
-    dataset_path = "//home/germanwahnsinn/elena_db_ds"
-    output_path = os.path.join(dataset_path, 'wavs')
-    db_path = "/home/germanwahnsinn/.config/voice-smith/db/voice_smith.db"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dataset_path", type=str, required=True)
+    parser.add_argument("--db_path", type=str, required=True)
+    parser.add_argument("--ds_name", type=str, default="LJSpeech")
+    parser.add_argument("--Language", type=str, default="en")
+    parser.add_argument("--speaker_name", type=str, default="LJSpeech")
+    args = parser.parse_args()
 
-    metadata = create_text_files_and_generate_metadata(dataset_path, output_path, db_path)
-
-    # Output metadata dictionary (sample_id, text_path, audio_path, speaker_id, transcription, dataset_id)
-    for item in metadata:
-        print(item)
+    metadata = create_text_files_and_generate_metadata(args.dataset_path, args.db_path,args.dsname, args.language, args.speaker_name)
