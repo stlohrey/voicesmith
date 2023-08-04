@@ -1,62 +1,75 @@
+annotated-types==0.5.0
+anyio==3.7.1
 appdirs==1.4.4
 audioread==3.0.0
 brotlipy==0.7.0
-certifi @ file:///croot/certifi_1690232220950/work/certifi
-cffi @ file:///croot/cffi_1670423208954/work
-charset-normalizer @ file:///tmp/build/80754af9/charset-normalizer_1630003229654/work
+certifi==2023.7.22
+cffi==1.15.1
+charset-normalizer==2.0.4
 click==8.1.6
 contourpy==1.1.0
-cryptography @ file:///croot/cryptography_1689373676338/work
+cryptography==41.0.2
 cycler==0.11.0
 decorator==5.1.1
 docker-pycreds==0.4.0
 einops==0.6.1
+exceptiongroup==1.1.2
+fastapi==0.100.1
 fastdtw==0.3.4
-filelock @ file:///croot/filelock_1672387128942/work
+filelock==3.9.0
+fire==0.5.0
 fonttools==4.41.1
 gitdb==4.0.10
 GitPython==3.1.32
-gmpy2 @ file:///tmp/build/80754af9/gmpy2_1645455533097/work
-idna @ file:///croot/idna_1666125576474/work
-Jinja2 @ file:///croot/jinja2_1666908132255/work
+gmpy2==2.1.2
+h11==0.14.0
+idna==3.4
+Jinja2==3.1.2
 joblib==1.3.1
 kiwisolver==1.4.4
 lazy_loader==0.3
 librosa==0.10.0.post2
 llvmlite==0.40.1
-MarkupSafe @ file:///opt/conda/conda-bld/markupsafe_1654597864307/work
+MarkupSafe==2.1.1
 matplotlib==3.7.2
 mkl-fft==1.3.6
-mkl-random @ file:///work/mkl/mkl_random_1682950433854/work
+mkl-random==1.2.2
 mkl-service==2.4.0
 mpmath==1.2.1
 msgpack==1.0.5
-networkx @ file:///croot/networkx_1678964333703/work
+networkx==2.8.4
 numba==0.57.1
 numpy==1.24.4
 packaging==23.1
 pathtools==0.1.2
 Pillow==9.4.0
+pip==23.2.1
 piq==0.8.0
 pooch==1.6.0
 protobuf==4.23.4
 psutil==5.9.5
-pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
-pyOpenSSL @ file:///croot/pyopenssl_1690223430423/work
+pycparser==2.21
+pydantic==2.1.1
+pydantic_core==2.4.0
+pyOpenSSL==23.2.0
 pyparsing==3.0.9
-PySocks @ file:///home/builder/ci_310/pysocks_1640793678128/work
+PySocks==1.7.1
 python-dateutil==2.8.2
 PyYAML==6.0.1
-requests @ file:///croot/requests_1690400202158/work
+requests==2.31.0
 scikit-learn==1.3.0
 scipy==1.11.1
 sentry-sdk==1.29.0
 setproctitle==1.3.2
+setuptools==68.0.0
 six==1.16.0
 smmap==5.0.0
+sniffio==1.3.0
 soundfile==0.12.1
 soxr==0.3.5
-sympy @ file:///croot/sympy_1668202399572/work
+starlette==0.27.0
+sympy==1.11.1
+termcolor==2.3.0
 tgt==1.4.4
 threadpoolctl==3.2.0
 torch==2.0.1
@@ -64,6 +77,8 @@ torchaudio==2.0.2
 torchvision==0.15.2
 tqdm==4.65.0
 triton==2.0.0
-typing_extensions @ file:///croot/typing_extensions_1690297465030/work
-urllib3 @ file:///croot/urllib3_1686163155763/work
+typing_extensions==4.7.1
+urllib3==1.26.16
+uvicorn==0.23.2
 wandb==0.15.7
+wheel==0.38.4
