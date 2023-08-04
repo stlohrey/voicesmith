@@ -524,7 +524,7 @@ def train_acoustic(
 
     gen, optim, step = get_acoustic_models(
         data_path=str(data_path),
-        checkpoint_acoustic=None,#checkpoint_acoustic,
+        checkpoint_acoustic=checkpoint_acoustic,
         train_config=train_config,
         preprocess_config=preprocess_config,
         model_config=model_config,

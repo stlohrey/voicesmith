@@ -352,30 +352,32 @@ def preprocessing_stage(
                 str(Path(data_path) / "logs" / "preprocessing.txt"),
                 log_console=log_console,
             )
-            p_config, _, _ = get_acoustic_configs(cur=cur, run_id=run_id)
-            vocab_paths = list(vocab_path.iterdir())
-            for i, vocab_path in enumerate(vocab_paths):
-                lang = vocab_path.name.split(".")[0]
-                align(
-                    cur=cur,
-                    con=con,
-                    table_name="training_run",
-                    foreign_key_name="training_run_id",
-                    run_id=run_id,
-                    environment_name=environment_name,
-                    data_path=data_path,
-                    lexicon_path=str(vocab_path),
-                    out_path=str(Path(data_path) / "data" / "textgrid" / lang),
-                    lang=lang,
-                    n_workers=p_config.workers,
-                    batch_size=p_config.forced_alignment_batch_size,
-                    language_type=p_config.language,
-                )
-                cur.execute(
-                    "UPDATE training_run SET preprocessing_gen_align_progress=? WHERE ID=?",
-                    ((i + 1) / len(vocab_paths), run_id),
-                )
-                con.commit()
+
+            if gen_vocab:
+                p_config, _, _ = get_acoustic_configs(cur=cur, run_id=run_id)
+                vocab_paths = list(vocab_path.iterdir())
+                for i, vocab_path in enumerate(vocab_paths):
+                    lang = vocab_path.name.split(".")[0]
+                    align(
+                        cur=cur,
+                        con=con,
+                        table_name="training_run",
+                        foreign_key_name="training_run_id",
+                        run_id=run_id,
+                        environment_name=environment_name,
+                        data_path=data_path,
+                        lexicon_path=str(vocab_path),
+                        out_path=str(Path(data_path) / "data" / "textgrid" / lang),
+                        lang=lang,
+                        n_workers=p_config.workers,
+                        batch_size=p_config.forced_alignment_batch_size,
+                        language_type=p_config.language,
+                    )
+                    cur.execute(
+                        "UPDATE training_run SET preprocessing_gen_align_progress=? WHERE ID=?",
+                        ((i + 1) / len(vocab_paths), run_id),
+                    )
+                    con.commit()
             cur.execute(
                 "UPDATE training_run SET preprocessing_stage='extract_data', preprocessing_gen_align_progress=1.0 WHERE ID=?",
                 (run_id,),

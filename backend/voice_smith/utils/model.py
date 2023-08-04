@@ -50,7 +50,12 @@ def get_acoustic_models(
     if checkpoint_acoustic is not None:
         ckpt = torch.load(checkpoint_acoustic)
         if reset:
+
+            #val=ckpt["gen"]["speaker_embed"]
+            #print(val.shape)
             del ckpt["gen"]["speaker_embed"]
+            
+            #print('del')
             del ckpt["gen"]["pitch_adaptor.pitch_bins"]
             # del ckpt["gen"]["pitch_adaptor.pitch_embedding.embeddings"]
             step = 0

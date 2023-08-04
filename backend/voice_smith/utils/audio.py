@@ -314,7 +314,7 @@ class TacotronSTFT(torch.nn.Module):
         )
         y = y.squeeze(1)
 
-        spec = torch.stft(
+        spec = torch.view_as_real(torch.stft(
             y,
             self.n_fft,
             hop_length=self.hop_size,
@@ -324,8 +324,8 @@ class TacotronSTFT(torch.nn.Module):
             pad_mode="reflect",
             normalized=False,
             onesided=True,
-            return_complex=False
-        )
+            return_complex=True
+        ))
 
         spec = torch.sqrt(spec.pow(2).sum(-1) + (1e-9))
 

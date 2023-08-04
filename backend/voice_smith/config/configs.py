@@ -51,24 +51,24 @@ class AcousticTrainingOptimizerConfig:
 
 @dataclass
 class AcousticFinetuningConfig:
-    batch_size = 5
-    grad_acc_step = 3
-    train_steps = 30000
-    log_step = 100
+    batch_size = 3
+    grad_acc_step = 5
+    train_steps = 100000
+    log_step = 20
     synth_step = 250
     val_step = 4000
     save_step = 250
     freeze_bert_until = 0
     mcd_gen_max_samples = 400
-    only_train_speaker_until = 5000
+    only_train_speaker_until = 2000
     optimizer_config: AcousticTrainingOptimizerConfig = field(default_factory= lambda : AcousticTrainingOptimizerConfig(
-        learning_rate=0.0002, weight_decay=0.1, lr_decay=0.99999
+        learning_rate=0.0001, weight_decay=0.1, lr_decay=0.99999
     ))
 
 
 @dataclass
 class AcousticPretrainingConfig:
-    batch_size = 3
+    batch_size = 2
     grad_acc_step = 5
     train_steps = 500000
     log_step = 20

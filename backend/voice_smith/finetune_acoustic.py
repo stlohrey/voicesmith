@@ -4,7 +4,7 @@ from pathlib import Path
 from voice_smith.acoustic_training import train_acoustic
 
 if __name__ == "__main__":
-    from voice_smith.config.preprocess_config import preprocess_config
+    from voice_smith.config.configs import preprocessing_config
     from voice_smith.config.acoustic_fine_tuning_config import (
         acoustic_fine_tuning_config,
     )

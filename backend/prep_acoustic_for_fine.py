@@ -3,7 +3,7 @@ from pathlib import Path
 import torch
 from voice_smith.utils.model import get_acoustic_models
 from voice_smith.config.globals import ASSETS_PATH
-from voice_smith.config.configs import PreprocessingConfig, AcousticFinetuningConfig, AcousticMultilingualModelConfig
+from voice_smith.config.configs import PreprocessingConfig, AcousticFinetuningConfig, AcousticENModelConfig
 
 def prep_acoustic_for_fine(checkpoint: str, data_path: str):
     device = torch.device("cpu")
@@ -11,8 +11,8 @@ def prep_acoustic_for_fine(checkpoint: str, data_path: str):
         data_path=data_path,
         checkpoint_acoustic=checkpoint,
         train_config=AcousticFinetuningConfig(),
-        preprocess_config=PreprocessingConfig(),
-        model_config=AcousticMultilingualModelConfig(),
+        preprocess_config=PreprocessingConfig(language="english_only"),
+        model_config=AcousticENModelConfig(),
         fine_tuning=True,
         device=device,
         reset=True,
